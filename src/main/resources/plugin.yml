@@ -1,0 +1,11 @@
+name: LobbySystem
+version: '1.0-SNAPSHOT'
+main: de.dermaster.lobbysystem.LobbySystem
+author: DerMaster
+api-version: 1.16
+depend:
+  - SimpleCloud-Plugin
+commands:
+  setup:
+  fly:
+  spawn:
