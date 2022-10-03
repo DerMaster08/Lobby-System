@@ -19,15 +19,14 @@ public class GadgetsEvent implements Listener {
         ItemStack itemStack = p.getInventory().getItemInMainHand();
         ItemMeta meta = itemStack.getItemMeta();
         String name = meta.getDisplayName();
-        if(name.equals("§6Grapling Hook")) {
+        if(name.equals("Grapling Hook")) {
             if (event.getState().equals(PlayerFishEvent.State.REEL_IN) || event.getState().equals(PlayerFishEvent.State.IN_GROUND)) {
                 if (GrapplingHookColldown.checkCooldown(event.getPlayer())) {
                     Location loc = p.getLocation();
                     Location hook = event.getHook().getLocation();
                     Location change = hook.subtract(loc);
-                    p.teleport(p.getLocation().add(0, 0.5, 0));
-                    Vector v = getVectorForPoints(loc, hook);
-                    p.setVelocity(v);
+                    //Vector v = getVectorForPoints(loc, hook);
+                    p.setVelocity(change.toVector().multiply(1.5D).setY(1.5));
                     GrapplingHookColldown.setCooldowns(event.getPlayer(), (int)2.5);
                 } else {
                     event.getHook().remove();
@@ -49,6 +48,7 @@ public class GadgetsEvent implements Listener {
         Projectile proj = event.getEntity();
         if(proj instanceof EnderPearl){
             new GadgetsClass((Player)proj.getShooter());
+
         }/*else if(proj instanceof FishHook){
             Player p = (Player) event.getEntity().getShooter();
             p.teleport(p.getLocation().add(0, 0.5, 0));

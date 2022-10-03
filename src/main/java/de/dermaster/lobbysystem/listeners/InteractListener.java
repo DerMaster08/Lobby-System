@@ -3,14 +3,16 @@ package de.dermaster.lobbysystem.listeners;
 import de.dermaster.lobbysystem.LobbySystem;
 import de.dermaster.lobbysystem.MySQL.MySQLf;
 import de.dermaster.lobbysystem.utils.Config;
+import de.dermaster.lobbysystem.utils.GadgetsClass;
 import de.dermaster.lobbysystem.utils.Hotbar;
 import de.dermaster.lobbysystem.utils.Playerhider;
+import org.bukkit.Sound;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
-import org.bukkit.plugin.messaging.PluginMessageListener;
-
-import java.sql.SQLException;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class InteractListener implements Listener
 {
@@ -19,13 +21,13 @@ public class InteractListener implements Listener
         final Player p = e.getPlayer();
 
         if(e.getItem() == null){e.setCancelled(true); return;}
-        if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6Navigator")) {
+        if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§oNavigator")) {
             Hotbar.openNavigator(p);
             e.setCancelled(true);
-        }else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6TeamServer")){
+        }else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§oTeamServer")){
             Hotbar.openTeam(p);
             e.setCancelled(true);
-        } else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6Fly")) {
+        } else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§oFly")) {
             if (LobbySystem.flyPlayers.contains(p.getUniqueId())) {
                 LobbySystem.flyPlayers.remove(p.getUniqueId());
                 p.sendMessage(LobbySystem.PREFIX + Config.getString("flyDeactivated"));
@@ -40,20 +42,25 @@ public class InteractListener implements Listener
                 e.setCancelled(true);
             }
         }else if (e.getItem().getItemMeta().getDisplayName().contains("Playerhider")){
-            try {
+            if(!LobbySystem.PHCooldown.contains(p.getUniqueId())) {
+                GadgetsClass.StartPhCooldown(p);
+                LobbySystem.PHCooldown.add(p.getUniqueId());
+                e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 50));
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDER_EYE_DEATH, 100, 0);
                 Playerhider.setPlayerHider(e.getPlayer());
                 Playerhider.getPlayerHider(e.getPlayer());
-                e.setCancelled(true);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+            }else {
+                if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                    p.sendMessage(LobbySystem.PREFIX + "Bitte warte eine Sekunde");
+                }
             }
-        } else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6Cosmetic")) {
+        } else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§oCosmetic")) {
             Hotbar.openCosmetik(p);
             e.setCancelled(true);
-        } else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6LobbySwitcher")) {
+        } else if (e.getItem().getItemMeta().getDisplayName().contains("LobbySwitcher")) {
             Hotbar.openLobbyswitcher(p);
             e.setCancelled(true);
-        }else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6Profil")){
+        }else if (e.getItem().getItemMeta().getDisplayName().contains("Profil")){
             MySQLf.sendFriendList(e.getPlayer(), 1);
             e.setCancelled(true);
         }

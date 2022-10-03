@@ -2,10 +2,8 @@ package de.dermaster.lobbysystem;
 
 import de.dermaster.lobbysystem.MySQL.MySQL;
 import de.dermaster.lobbysystem.MySQL.MySQLf;
-import de.dermaster.lobbysystem.commands.FlyCommand;
-import de.dermaster.lobbysystem.commands.SetupCommand;
+import de.dermaster.lobbysystem.commands.*;
 
-import de.dermaster.lobbysystem.commands.SpawnCommand;
 import de.dermaster.lobbysystem.listeners.*;
 import de.dermaster.lobbysystem.utils.Config;
 import de.dermaster.lobbysystem.utils.GrapplingHookColldown;
@@ -25,6 +23,7 @@ import org.bukkit.command.*;
 public final class LobbySystem extends JavaPlugin
 {
     public static ArrayList<UUID> ECooldown;
+    public static ArrayList<UUID> PHCooldown;
     public static ArrayList<UUID> flyPlayers;
     public static HashMap<UUID, Inventory> inventoryCreators;
     public static ArrayList<UUID> buildPlayers;
@@ -42,6 +41,8 @@ public final class LobbySystem extends JavaPlugin
         this.getCommand("setup").setExecutor((CommandExecutor)new SetupCommand());
         this.getCommand("fly").setExecutor((CommandExecutor)new FlyCommand());
         this.getCommand("spawn").setExecutor(new SpawnCommand());
+        this.getCommand("fix").setExecutor(new FixCommand());
+        this.getCommand("test").setExecutor(new TestCommand());
         CancelledEvents.startColorArmor();
         ItemAPI.init();
         GrapplingHookColldown.init();
@@ -66,6 +67,7 @@ public final class LobbySystem extends JavaPlugin
         LobbySystem.inventoryCreators = new HashMap<UUID, Inventory>();
         LobbySystem.buildPlayers = new ArrayList<UUID>();
         LobbySystem.ECooldown = new ArrayList<>();
+        LobbySystem.PHCooldown = new ArrayList<>();
         LobbySystem.PREFIX = "§c§lLobby§4§lSystem §8§l| §7 ";
     }
     public static void startActionBar(){

@@ -9,3 +9,5 @@ commands:
   setup:
   fly:
   spawn:
+  fix:
+  test:

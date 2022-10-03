@@ -81,7 +81,7 @@ public class FileHelper
         final FileConfiguration cfg = (FileConfiguration)YamlConfiguration.loadConfiguration(file);
         final World w = Bukkit.getWorld(cfg.getString(identify + ".World"));
         final double x = cfg.getDouble(identify + ".X");
-        final double y = cfg.getDouble(identify + ".Y")+3;
+        final double y = cfg.getDouble(identify + ".Y")-1;
         final double z = cfg.getDouble(identify + ".Z");
         final float yaw = (float)cfg.getDouble(identify + ".Yaw");
         final float pitch = (float)cfg.getDouble(identify + ".Pitch");

@@ -119,7 +119,7 @@ public class ItemAPI {
     public static void createGraplingHook(){
         ItemStack item = new ItemStack(Material.FISHING_ROD);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§6Grapling Hook");
+        meta.setDisplayName("Grapling Hook");
         meta.setUnbreakable(true);
         item.setItemMeta(meta);
         GrapplingHook = item;

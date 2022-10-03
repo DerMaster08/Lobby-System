@@ -1,21 +1,14 @@
 package de.dermaster.lobbysystem.utils;
 
 import com.google.common.collect.ImmutableList;
-import de.dermaster.lobbysystem.LobbySystem;
 import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.player.ICloudPlayer;
-import eu.thesimplecloud.module.permission.PermissionPool;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
 
 public class ScoreboardManager {
     public static void setScoreboard(){
         for (Player player : Bukkit.getOnlinePlayers()) {
-            String[] args = player.getDisplayName().split(" ");
             Sidebar sidebar = new Sidebar("§c§lLbGame§4§lMC", ImmutableList.<String>builder()
                     .add("§0")
                     .add("§aOnline§8:")
@@ -32,7 +25,7 @@ public class ScoreboardManager {
                     .add("§5")
                     .build()).build().send(player);
         }
-    }
+    }//getCloudPlayer(player).getConnectedServer().getName()
     private static ICloudPlayer getCloudPlayer(Player p) {
         try {
             return (ICloudPlayer) CloudAPI.getInstance().getCloudPlayerManager().getCloudPlayer(p.getUniqueId()).get();

@@ -19,8 +19,9 @@ public class DoubleJumpListener implements Listener
         }
         e.setCancelled(true);
         p.setAllowFlight(false);
-        p.setVelocity(p.getLocation().getDirection().clone().normalize().multiply(0.8).setY(1.0));
-        p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 0.5f, 1.0f);
+        p.setVelocity(p.getLocation().getDirection().multiply(2.0D).setY(0.9D));
+        //p.setVelocity(p.getLocation().getDirection().clone().normalize().multiply(0.8).setY(1.0).setY(p.getLocation().getPitch()));
+        p.playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 0.5f, 1.0f);
     }
     
     @EventHandler
